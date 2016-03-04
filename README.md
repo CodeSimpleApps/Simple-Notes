@@ -1,1 +1,1 @@
-# Simple-Notes - simple note taking app with coredata
+### Simple-Notes - simple note taking app with coredata
