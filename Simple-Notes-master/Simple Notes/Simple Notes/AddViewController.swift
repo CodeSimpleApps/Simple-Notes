@@ -3,10 +3,12 @@
 //  Simple Notes
 //
 //  Created by Abdurrahman on 3/4/16.
+//  Modified by Chirstopher Augg on 3/4/16 to add Core Data functionality
 //  Copyright © 2016 CodeSimpleApps. All rights reserved.
 //
 
 import UIKit
+import CoreData
 
 class AddViewController: UIViewController {
 
@@ -24,6 +26,11 @@ class AddViewController: UIViewController {
 		if addNoteTextView.text != "" {
 			// Save the new note
 			// also make the navigation pop back
+            
+            if let note = addNoteTextView.text {
+                CoreDataService.cds.saveNote(note)
+            }
+            
 			self.navigationController?.popToRootViewControllerAnimated(true)
 		} else {
 			showAlert("Error", message: "Please provide some data", closeButton: "OK")
@@ -34,7 +41,6 @@ class AddViewController: UIViewController {
 		let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
 		alertController.addAction(UIAlertAction(title: closeButton, style: .Default, handler: nil))
 		self.presentViewController(alertController, animated: true, completion: nil)
-	}
-	
+	}	
 
 }
