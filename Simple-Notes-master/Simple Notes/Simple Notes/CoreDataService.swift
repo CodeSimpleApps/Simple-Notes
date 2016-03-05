@@ -13,13 +13,14 @@ import UIKit
 class CoreDataService {
     static let cds = CoreDataService()    
     var notes = [NSManagedObject]()
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
+   
     
     func saveNote(name: String) {
         
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
         let entity =  NSEntityDescription.entityForName("Note", inManagedObjectContext:managedContext)
-        
         let note = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
         
         note.setValue(name, forKey: "text")
@@ -35,17 +36,20 @@ class CoreDataService {
     
     func updateNote(index:Int, newNote: String){
         
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         notes[index].setValue(newNote, forKey: "text")
         appDelegate.saveContext()        
         
     }
     
+    func deleteNote(noteObjToDelete: NSManagedObject) {
+        
+        let managedContext = appDelegate.managedObjectContext
+        managedContext.deleteObject(noteObjToDelete)
+    }
+    
     func loadNotes() {
         
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
-        
         let fetchRequest = NSFetchRequest(entityName: "Note")
         
         do {
