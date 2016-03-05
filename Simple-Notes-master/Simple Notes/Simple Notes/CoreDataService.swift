@@ -42,15 +42,17 @@ class CoreDataService {
     }
     
     func deleteNote(noteObjToDelete: NSManagedObject) {
-        
+       
         let managedContext = appDelegate.managedObjectContext
         managedContext.deleteObject(noteObjToDelete)
+        appDelegate.saveContext()
     }
     
     func loadNotes() {
         
         let managedContext = appDelegate.managedObjectContext
         let fetchRequest = NSFetchRequest(entityName: "Note")
+        
         
         do {
             let results = try managedContext.executeFetchRequest(fetchRequest)
